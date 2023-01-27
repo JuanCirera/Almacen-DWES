@@ -16,7 +16,8 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        //
+        $articles=Article::where("user_id",auth()->user()->id)->orderBy("id","desc")->paginate(10);
+        return view("dashboard",compact("articles"));
     }
 
     /**
@@ -38,15 +39,15 @@ class ArticleController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            "nombre"=>["required","string","unique:nombre"],
-            "descripcion"=>["required","string"],
+            "nombre"=>["required","string","min:3","unique:articles,nombre"],
+            "descripcion"=>["required","string","min:10"],
             "file"=>["required","image"],
-            "precio"=>["required","decimal:5,2","max:999"],
-            "stock"=>["required","number"]
+            "precio"=>["required","numeric","max:999"],
+            "stock"=>["required","numeric","min:0"]
         ]);
 
         //Se guarda la imagen
-        $img=$request->file->store("articulos");
+        $img=$request->file->store("public/articulos");
 
         //Se crea el objeto
         Article::create([
@@ -60,7 +61,7 @@ class ArticleController extends Controller
         ]);
 
 
-        return redirect()->route("dashboard")->with("mansaje","Artículo creado");
+        return redirect()->route("dashboard")->with("mensaje","Artículo creado");
     }
 
     /**
@@ -96,15 +97,15 @@ class ArticleController extends Controller
     {
         $request->validate([
             //Se le añade el id del objeto para que lo excluya en la comprobacion
-            "nombre"=>["required","string","unique:articles,nombre".$article->id],
-            "descripcion"=>["required","string"],
-            "file"=>["required","image"],
-            "precio"=>["required","decimal:5,2","max:999"],
-            "stock"=>["required","number"]
+            "nombre"=>["required","string","min:3","unique:articles,nombre,".$article->id],
+            "descripcion"=>["required","string","min:10"],
+            "file"=>["nullable","image"],
+            "precio"=>["required","numeric","max:999"],
+            "stock"=>["required","numeric","min:0"]
         ]);
 
         //Se guarda o no la imagen en caso de haberse cambiado
-        $img=($request->file) ? $request->file->store("articulos") : $article->imagen;
+        $img=($request->file) ? $request->file->store("public/articulos") : $article->imagen;
         $oldImg=$article->imagen;
 
         //Se actualiza el objeto
@@ -121,7 +122,7 @@ class ArticleController extends Controller
         //Se borra la imagen anterior si es que hay una nueva
         if($request->file) Storage::delete($oldImg);
 
-        return redirect()->route("dashboard")->with("mansaje","Artículo actualizado");
+        return redirect()->route("dashboard")->with("mensaje","Artículo actualizado");
     }
 
     /**
@@ -133,10 +134,9 @@ class ArticleController extends Controller
     public function destroy(Article $article)
     {
         $img=$article->imagen;
-
         $article->delete();
         Storage::delete($img);
 
-        return redirect()->route("dashboard")->with("mansaje","Artículo eliminado");
+        return redirect()->route("dashboard")->with("mensaje","Artículo eliminado");
     }
 }
