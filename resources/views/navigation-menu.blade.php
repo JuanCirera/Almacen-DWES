@@ -13,17 +13,17 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('inicio') }}" :active="request()->routeIs('inicio')">
-                        Inicio
+                        <i class="fas fa-home mr-2"></i> Inicio
                     </x-jet-nav-link>
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        Dashboard
+                        <i class="fas fa-gear mr-2"></i> Dashboard
                     </x-jet-nav-link>
                     <x-jet-nav-link href="{{ route('articles.create') }}" :active="request()->routeIs('articles.create')">
-                        Crear nuevo
+                        <i class="fas fa-add mr-2"></i> Crear nuevo
                     </x-jet-nav-link>
-                    {{-- <x-jet-nav-link href="{{ route('articles.create') }}" :active="request()->routeIs('articles.create')">
-                        Contacto
-                    </x-jet-nav-link> --}}
+                    <x-jet-nav-link href="{{ route('contacto') }}" :active="request()->routeIs('contacto')">
+                        <i class="fa-solid fa-envelope mr-2"></i> Contacto
+                    </x-jet-nav-link>
                 </div>
             </div>
 
@@ -155,7 +155,7 @@
             <x-jet-responsive-nav-link href="{{ route('articles.create') }}" :active="request()->routeIs('articles.create')">
                 Crear nuevo
             </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="{{ route('articles.create') }}" :active="request()->routeIs('articles.create')">
+            <x-jet-responsive-nav-link href="{{ route('contacto') }}" :active="request()->routeIs('contacto')">
                 Contacto
             </x-jet-responsive-nav-link>
         </div>
