@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="mx-auto max-w-lg rounded overflow-hidden shadow-lg mb-5">
+            <div class="mx-auto max-w-lg rounded overflow-hidden shadow-lg mb-5 bg-white">
                 <img class="w-full" src="{{Storage::url($article->imagen)}}" alt="">
                 <div class="px-6 py-4">
                     <div>
