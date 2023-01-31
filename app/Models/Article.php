@@ -17,6 +17,7 @@ class Article extends Model
         return $this->BelongsTo(User::class);
     }
 
+    //Metodo para "activar" las url amigables
     public function getRouteKeyName()
     {
         return "slug";

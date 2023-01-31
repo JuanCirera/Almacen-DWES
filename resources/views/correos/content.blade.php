@@ -3,3 +3,4 @@
 ## Contenido: <br>
 {{$contenido}}
 @endcomponent
+
